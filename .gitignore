@@ -1,0 +1,20 @@
+# Python/Django
+/backend/venv/
+__pycache__/
+*.pyc
+/backend/db.sqlite3
+
+# Frontend
+/frontend/node_modules/
+/frontend/dist/
+.DS_Store
+
+# Environment variables (IMPORTANT)
+.env
+.env.*
+/backend/.env
+/frontend/.env.*
+
+# IDE/Editor files
+.vscode/
+.idea/
