@@ -5,5 +5,6 @@ from . import syslog_consumer, netflow_consumer, status_consumer # Add status_co
 websocket_urlpatterns = [
     re_path(r'ws/syslog/$', syslog_consumer.PacketConsumer.as_asgi()),
     re_path(r'ws/netflow/$', netflow_consumer.NetflowConsumer.as_asgi()),
-    re_path(r'ws/status/$', status_consumer.StatusConsumer.as_asgi()), # Add this line
+    re_path(r'ws/status/$', status_consumer.StatusConsumer.as_asgi()),
+    re_path(r'ws/netconsole/$', netconsole_consumer.NetconsoleConsumer.as_asgi()),
 ]

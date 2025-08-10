@@ -27,3 +27,16 @@ class NetflowEntry(models.Model):
     class Meta:
         ordering = ['-received_at']
         verbose_name_plural = "Netflow Entries"
+
+class NetconsoleEntry(models.Model):
+    received_at = models.DateTimeField(auto_now_add=True, db_index=True)
+    source_ip = models.CharField(max_length=255)
+    message = models.TextField()
+    raw_message = models.TextField()
+
+    def __str__(self):
+        return f"{self.received_at.strftime('%Y-%m-%d %H:%M:%S')} - {self.source_ip} - {self.message[:50]}"
+
+    class Meta:
+        ordering = ['-received_at']
+        verbose_name_plural = "Netconsole Entries"
