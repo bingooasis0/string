@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 
-// A custom hook to detect clicks outside the modal content
 const useOutsideClick = (ref, callback) => {
   useEffect(() => {
     const listener = (event) => {
@@ -21,8 +20,6 @@ const useOutsideClick = (ref, callback) => {
 export const Modal = ({ isOpen, onClose, title, children }) => {
   const modalRef = useRef(null);
   useOutsideClick(modalRef, onClose);
-
-  // Close modal on "Escape" key press
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.key === 'Escape') {

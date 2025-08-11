@@ -1,31 +1,31 @@
-import React from 'react';
+import React from 'react'
 
-export const DashboardCard = ({ icon, title, description, status, onClick, statusText }) => {
-  const getStatusClass = (s) => (s === 'running' ? 'running' : 'down');
-
-  // Add a class to make non-clickable cards appear disabled
-  const cardClasses = `dashboard-card ${!onClick ? 'disabled' : ''}`;
+export function DashboardCard({ icon, title, description, status, statusText, onClick }) {
+  const cardClass = `dashboard-card${onClick ? ' clickable' : ''}`
+  const dot =
+    status === 'running' ? 'dot dot-ok' :
+    status === 'down' ? 'dot dot-bad' : 'dot dot-warn'
 
   return (
-    <div onClick={onClick} className={cardClasses}>
-      <div className="card-header">
-        <div className="card-icon">{icon}</div>
-        <h3 className="card-title">{title}</h3>
+    <div className={cardClass} onClick={onClick}>
+      <div className="card-head">
+        <div className="icon">{icon}</div>
+        <div className="title">{title}</div>
       </div>
-      <p className="card-description">{description}</p>
-      <div className="card-footer">
-        {status && (
-          <div className="card-status">
-            <span className={`service-indicator ${getStatusClass(status)}`}></span>
-            Status: <strong>{status}</strong>
+      <div className="card-body">
+        <p className="desc">{description}</p>
+        {status !== undefined ? (
+          <div className="inline">
+            <span className={dot} />
+            <span>Status - </span>
+            <b>{status}</b>
           </div>
-        )}
-        {statusText && (
-          <div className="card-status-text">
-            {statusText}
-          </div>
+        ) : (
+          statusText || null
         )}
       </div>
     </div>
-  );
-};
+  )
+}
+
+export default DashboardCard

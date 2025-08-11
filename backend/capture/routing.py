@@ -1,10 +1,16 @@
-# C:\Users\colby\Desktop\String\backend\capture\routing.py
 from django.urls import re_path
-from . import syslog_consumer, netflow_consumer, status_consumer # Add status_consumer
+from .consumers import (
+    SyslogConsumer,
+    NetflowConsumer,
+    NetconsoleConsumer,
+    StatusConsumer,
+    SnmpConsumer,
+)
 
 websocket_urlpatterns = [
-    re_path(r'ws/syslog/$', syslog_consumer.PacketConsumer.as_asgi()),
-    re_path(r'ws/netflow/$', netflow_consumer.NetflowConsumer.as_asgi()),
-    re_path(r'ws/status/$', status_consumer.StatusConsumer.as_asgi()),
-    re_path(r'ws/netconsole/$', netconsole_consumer.NetconsoleConsumer.as_asgi()),
+    re_path(r"^ws/syslog/$", SyslogConsumer.as_asgi()),
+    re_path(r"^ws/netflow/$", NetflowConsumer.as_asgi()),
+    re_path(r"^ws/netconsole/$", NetconsoleConsumer.as_asgi()),
+    re_path(r"^ws/status/$", StatusConsumer.as_asgi()),
+    re_path(r"^ws/snmp/$", SnmpConsumer.as_asgi()),
 ]

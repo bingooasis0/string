@@ -1,11 +1,20 @@
-import React from 'react';
+import React from 'react'
 
-export const DataTable = ({ title, packets, streamStatus, collectorStatus }) => {
+export const DataTable = ({ title, packets = [], streamStatus, collectorStatus, columns }) => {
   const getStatusClass = (s) => {
-    if (s === 'Connected' || s === 'running') return 'connected';
-    if (s === 'Disconnected' || s === 'Error' || s === 'down') return 'disconnected';
-    return 'connecting';
-  };
+    if (s === 'Connected' || s === 'running') return 'connected'
+    if (s === 'Disconnected' || s === 'Error' || s === 'down') return 'disconnected'
+    return 'connecting'
+  }
+
+  const defaultCols = [
+    { key: 'id', label: 'ID' },
+    { key: 'timestamp', label: 'Timestamp' },
+    { key: 'source', label: 'Source' },
+    { key: 'protocol', label: 'Protocol' },
+    { key: 'info', label: 'Info' }
+  ]
+  const cols = columns && columns.length ? columns : defaultCols
 
   return (
     <>
@@ -23,26 +32,28 @@ export const DataTable = ({ title, packets, streamStatus, collectorStatus }) => 
         <table className="packet-table">
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Timestamp</th>
-              <th>Source</th>
-              <th>Protocol</th>
-              <th>Info</th>
+              {cols.map((c) => (
+                <th key={c.key}>{c.label}</th>
+              ))}
             </tr>
           </thead>
           <tbody>
-            {packets.map(p => (
-              <tr key={p.id}>
-                <td>{p.id}</td>
-                <td>{new Date(p.timestamp).toLocaleTimeString()}</td>
-                <td>{p.source}</td>
-                <td>{p.protocol}</td>
-                <td>{p.info}</td>
+            {packets.map((row) => (
+              <tr key={row.id}>
+                {cols.map((c) => (
+                  <td key={c.key}>
+                    {c.key === 'timestamp' && !columns
+                      ? new Date(row[c.key]).toLocaleTimeString()
+                      : row[c.key] ?? ''}
+                  </td>
+                ))}
               </tr>
             ))}
           </tbody>
         </table>
       </div>
     </>
-  );
-};
+  )
+}
+
+export default DataTable
